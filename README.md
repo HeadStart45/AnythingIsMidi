@@ -13,11 +13,12 @@ internal team and developer-facing with the use of libraries like PySimpleGUI an
 
 One of my passions is solving development and workflow problems with code and Python is the perfect language to help solve internal problems. 
 
+
+
+## Getting Started
 Currently a prototype/proof of concept. This 0.1 version is a one-day-build or jam using Python to turn any i/o device into a MIDI controller. 
 
 This current version is a single implementation for a controller. On pressing the north, south, east and west buttons (X,Y,A,B on xbox) this program will send midi notes to a virtual port.
-
-## Getting Started
 
 ### Dependencies
 * [DS4](https://ds4-windows.com/) - Required if you are using a non-Windows native controller e.g. PS4, PS5 or Switch. Installing the program should be all you need to do, it will handle the controller emulation from there
@@ -32,10 +33,6 @@ This current version is a single implementation for a controller. On pressing th
 * Download and install a DAW.
 * Run the program
 * Follow the DAW instructions for connecting to a MIDI port 
-
-### Executing program
-
-
 
 ## Authors
 
