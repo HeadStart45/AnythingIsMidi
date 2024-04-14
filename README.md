@@ -2,7 +2,7 @@
 
 A simple Python portfolio program for setting up nontraditional input devices as MIDI controllers
 
-##Portfolio Notes
+## Portfolio Notes
 This program is meant as a portfolio piece for me [Liam McDonald-Lurch](https://www.linkedin.com/in/liam-mcdonald-lurch-1a965b131/). Details for setting up and using the program are below my portfolio notes. 
 
 As well as being a functional and useful program based around an esoteric question ("Can a game controller be a MIDI pad?") this project is also made to show my ability to build straightforward, maintainable Python code.
