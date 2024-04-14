@@ -1,9 +1,7 @@
 import rtmidi
-
-PAD_ONE = 40
-PAD_TWO = 38
-PAD_THREE = 37
-PAD_FOUR = 36
+import gamepadstate as gs
+from constants import MIDI_PAD, GAMEPAD_KEY, GAMEPAD_ABSOLUTE
+import KeyPatchDirectory as kpd
 
 midiout = rtmidi.MidiOut()
 available_ports = midiout.get_ports()
@@ -24,3 +22,18 @@ def StartPlayNote(note: int) -> None:
 
 def StopPlayNote(note: int) -> None:
     midiout.send_message(generateMidiMessage(False, note))
+
+#called as a thread from the gui main loop, runs once the pad is activated
+def ControllerLoop(window, inDirectory: kpd.KeyActionDirectory) -> None:
+    states = gs.gamepadstate()
+    directory: kpd.KeyActionDirectory = inDirectory
+
+    while 1:
+        #poll the gamepad for input
+        states.PollEvents()
+
+        for key in GAMEPAD_KEY:
+            if(states.GetButtonDown(key)):
+                StartPlayNote(directory.GetAction(key))
+            if(states.GetButtonUp(key)):
+                StopPlayNote(directory.GetAction(key))
