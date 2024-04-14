@@ -1,10 +1,7 @@
 import gamepadstate as gs
 import midicontroller as midi
-import os
+from utility import cls
 
-
-def cls():
-    os.system('cls' if os.name=='nt' else 'clear')
 
 if __name__ == "__main__":
     states = gs.gamepadstate()
