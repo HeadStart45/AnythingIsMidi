@@ -26,8 +26,8 @@ class gamepadstate:
         self.buttonStates: dict[str, int] = {}
     def IngestAxisEvent(self, event) -> None:
         self.axisStates[event.code] = event.state
-    def IngestButtonEvent(self, event) -> None:        
-        self.buttonStates[event.code] = event.state
+    def IngestButtonEvent(self, event) -> None:
+        self.buttonStates[event.code] = KEY_STATE(event.state)
     def ClearButtonEvents(self) -> None:
         for key in self.buttonStates:
             if(self.buttonStates[key] == KEY_STATE.STATE_DOWN):
@@ -50,7 +50,9 @@ class gamepadstate:
             return 0
     def GetButtonDown(self, name: str) -> bool:
         #print(f"Actual Button State: {self.buttonStates[name]}")
-        if(name in self.buttonStates):  
+        if(name in self.buttonStates):
+            if(self.buttonStates[name] == KEY_STATE.STATE_DOWN) :
+                print("this should evaluate to true")
             return self.buttonStates[name] == KEY_STATE.STATE_DOWN
         else:
             return False
