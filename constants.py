@@ -38,4 +38,10 @@ class MIDI_PAD(Enum):
     PAD_THREE = 37
     PAD_FOUR = 36
 
+class INPUT_CONTROLLER_TYPE(Enum):
+    GAMEPAD = 0,
+    KEYBOARD = 1,
+    MOUSE = 2,
+    OTHER = 3,
+
 
