@@ -14,10 +14,13 @@ deviceType = DEVICE_TYPE.NONE
 portCombo = sg.Combo(midi.available_ports, expand_x=True, enable_events=True, readonly=False, key='-PORTCOMBO-')
 devicesCombo = sg.Combo(GetDeviceList(), expand_x=True, enable_events=True, readonly=False, key='-DEVICECOMBO-')
 
+#Note information
+note = sg.InputText(' ', key='')
+
 #Game Pad inputs
 gamepadLayout = [[sg.Text('Assign Game Keys To Notes')]]
 for gkey in GAMEPAD_KEY:
-    gamepadLayout.append([sg.Text(gkey), sg.Button('Play', key=f"-{gkey}-")])
+    gamepadLayout.append([sg.Text(gkey), sg.InputText(' ', key=f"-{gkey}-")])
 gamepadFrame = sg.Frame('Game Pad', layout=gamepadLayout, key=('-GAMEPADFRAME-'), visible=False)
 
 #Mouse inputs
@@ -34,6 +37,7 @@ layout = [
     [sg.Text('Choose an Input device type:')],
     [devicesCombo, sg.Button('Refresh Devices')],
     [gamepadFrame],[mouseFrame],
+    [sg.Button('Activate Port'), sg.Button('Quit')]
 ]
 
 
@@ -65,6 +69,7 @@ while True:
     for gkey in GAMEPAD_KEY:
         if event == f"-{gkey}-":
             print(gkey)
+
 
     
 
