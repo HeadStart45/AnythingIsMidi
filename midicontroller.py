@@ -50,15 +50,17 @@ class MidiController:
     def StopPlayNote(self, note: int) -> None:
         self.midiout.send_message(self.generateMidiMessage(False, note))
     def ControllerLoop(self) -> None:   
-        #poll the gamepad for input
-        self.states.PollEvents()
-        print("loop")
-        for key in DEVICE_TO_KEYMAP[self.activeInputType]:
-            if(self.states.GetButtonDown(key)):
-                self.StartPlayNote(self.key_action_directory.GetAction(key))
-                print("Playing Note")
-            if(self.states.GetButtonUp(key)):
-                self.StopPlayNote(self.key_action_directory.GetAction(key))
-                print("Stop Playing Note")
+        self.Setup()
+        while(self.midiout.is_port_open()):
+            #poll the gamepad for input
+            self.states.PollEvents()
+            print("loop")
+            for key in DEVICE_TO_KEYMAP[self.activeInputType]:
+                if(self.states.GetButtonDown(key)):
+                    self.StartPlayNote(self.key_action_directory.GetAction(key))
+                    print("Playing Note")
+                if(self.states.GetButtonUp(key)):
+                    self.StopPlayNote(self.key_action_directory.GetAction(key))
+                    print("Stop Playing Note")
     def HasPort(self) -> bool:
         return self.port != -1 # -1 is the default should only be sit to this if there are no ports available

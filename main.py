@@ -46,9 +46,9 @@ layout = [
     [sg.Button('Activate', disabled=True), sg.Button('DeActivate', disabled=True), sg.Button('Quit')]
 ]
 
-def SetLoop():
-    while 1:
-        midi.ControllerLoop()
+def SetLoop(window):
+    midi.ControllerLoop()
+
         
 
 # Create the GUI window
@@ -65,8 +65,7 @@ while True:
         else:
             sg.PopupOK("No ports found. If on windows you will need to use a program like loopMidi to create a virtual port")
     if event == 'Refresh Ports':
-        midi.RefreshPorts()
-        window['-PORTCOMBO-'].update(values=midi.GetAvailablePorts(), value=midi.GetAvailablePorts()[0])
+        sg.PopupOK("Live refresh is not currently supported. You will need to close the program and relaunch")
     if event == '-DEVICECOMBO-':
         deviceType = DetectDeviceType(values["-DEVICECOMBO-"])
 
@@ -90,10 +89,10 @@ while True:
         
         
     if event == 'Refresh Devices':
-        window['-DEVICECOMBO-'].Update(values=GetDeviceList(), value=GetDeviceList()[0])
+        sg.PopupOK("Live refresh is not currently supported. You will need to close the program and relaunch")
+        #window['-DEVICECOMBO-'].Update(values=GetDeviceList(), value=GetDeviceList()[0])
     if event == 'Activate':
-        midi.Setup()
-        window.start_thread(lambda: SetLoop(), ('-THREAD-', '-THEAD ENDED-'))
+        window.start_thread(lambda: SetLoop(window), ('-THREAD-', '-THEAD ENDED-'))
         sg.PopupOK("Port Activated!! You can still change the key map values!")
         window['Activate'].update(disabled= True)
         window['DeActivate'].update(disabled= False)
@@ -104,7 +103,11 @@ while True:
                 if(values[f"-{inKey}-"] != ''):
                     midi.key_action_directory.AddPlayNoteAction(inKey, int(values[f"-{inKey}-"]))
                     print(f"Key Action Directory: {midi.key_action_directory.actionDict}")
-        
+    if event == 'DeActivate':
+        midi.Deactivate()
+        window['Activate'].update(disabled= False)
+        window['DeActivate'].update(disabled= True)
+        sg.PopupOK("Port disconnected")
 
     
 
