@@ -1,5 +1,5 @@
 from enum import Enum
-class GAMEPAD_KEY(str, Enum):
+class GAMEPAD_KEYMAP(str, Enum):
     BUTTON_SOUTH = "BTN_SOUTH"
     BUTTON_WEST = "BTN_WEST"
     BUTTON_EAST = "BTN_EAST"
@@ -11,7 +11,7 @@ class GAMEPAD_KEY(str, Enum):
     R_THREE = "BTN_THUMBR"
     L_THREE = "BTN_THUMBL"
 
-class GAMEPAD_ABSOLUTE(str, Enum):
+class GAMEPAD_ABSOLUTEMAP(str, Enum):
     LEFT_STICK_X = "ABS_X"
     LEFT_STICK_Y = "ABS_Y"
 
@@ -22,7 +22,7 @@ class GAMEPAD_ABSOLUTE(str, Enum):
     
     RIGHT_TRIGGER = "ABS_RZ"
 
-class MOUSE_KEY(str, Enum):
+class MOUSE_KEYMAP(str, Enum):
     LEFT_BUTTON = "BTN_LEFT"
     RIGHT_BUTTON = "BTN_RIGHT"
     MIDDLE_BUTTON = "BTN_MIDDLE"
@@ -51,4 +51,11 @@ class DEVICE_TYPE(Enum):
     MOUSE = 3,
     OTHER = 4,
 
+DEVICE_TO_KEYMAP = {
+    DEVICE_TYPE.GAMEPAD : GAMEPAD_KEYMAP,
+    DEVICE_TYPE.MOUSE : MOUSE_KEYMAP,
+}
 
+DEVICE_TO_ABSOLUTEMAP = {
+    DEVICE_TYPE.GAMEPAD : GAMEPAD_ABSOLUTEMAP,
+}

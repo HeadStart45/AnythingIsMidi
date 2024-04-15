@@ -1,13 +1,14 @@
 import rtmidi
 from inputController import gamepadstate as gs
-from constants import MIDI_PAD, GAMEPAD_KEY, GAMEPAD_ABSOLUTE
-import KeyPatchDirectory as kpd
+from constants import DEVICE_TO_KEYMAP, DEVICE_TYPE
+import KeyActionDirectory as kad
 
 class MidiController:
     def __init__(self) -> None:
         self.midiout = rtmidi.MidiOut()
         self.available_ports = self.midiout.get_ports()
-        
+        self.key_action_directory = kad.KeyActionDirectory()
+        self.activeInputType: DEVICE_TYPE = DEVICE_TYPE.NONE
         self.port = 0
 
     def Setup(self) -> None:
@@ -17,6 +18,8 @@ class MidiController:
             print("No ports found")
     def SetPort(self, portIndex: int) -> None:
         self.port = portIndex
+    def SetActiveInput(self, inputType):
+        self.activeInputType = inputType
     def RefreshPorts(self) -> None:
         self.midiout.delete()
         self.midiout = rtmidi.MidiOut()
@@ -32,23 +35,16 @@ class MidiController:
         self.midiout.send_message(self.generateMidiMessage(True, note))
     def StopPlayNote(self, note: int) -> None:
         self.midiout.send_message(self.generateMidiMessage(False, note))
+    def ControllerLoop(self, window) -> None:   
+        self.Setup
+        states = gs.gamepadstate()
+        while 1:
+            #poll the gamepad for input
+            states.PollEvents()
 
+            for key in DEVICE_TO_KEYMAP[self.activeInputType]:
+                if(states.GetButtonDown(key)):
+                    self.StartPlayNote(self.key_action_directory.GetAction(key))
+                if(states.GetButtonUp(key)):
+                    self.StopPlayNote(self.key_action_directory.GetAction(key))
 
-#called as a thread from the gui main loop, runs once the pad is activated
-def ControllerLoop(window, midi, inDirectory: kpd.KeyActionDirectory) -> None:
-
-
-    #midi.Setup
-    
-    states = gs.gamepadstate()
-    directory: kpd.KeyActionDirectory = inDirectory
-
-    while 1:
-        #poll the gamepad for input
-        states.PollEvents()
-
-        for key in GAMEPAD_KEY:
-            if(states.GetButtonDown(key)):
-                midi.StartPlayNote(directory.GetAction(key))
-            if(states.GetButtonUp(key)):
-                midi.StopPlayNote(directory.GetAction(key))

@@ -1,5 +1,5 @@
 from inputs import get_gamepad, devices
-from constants import GAMEPAD_KEY, KEY_STATE, EVENT_TYPE, DEVICE_TYPE
+from constants import GAMEPAD_KEYMAP, KEY_STATE, EVENT_TYPE, DEVICE_TYPE
 from utility import Vector2
 
 def GetDeviceList():
@@ -67,6 +67,6 @@ class gamepadstate:
         
     def GetStickVector(self, _left: bool) -> Vector2:
         if(_left):
-            return Vector2(self.GetAxis(GAMEPAD_KEY.LEFT_STICK_X), self.GetAxis(GAMEPAD_KEY.LEFT_STICK_Y))
+            return Vector2(self.GetAxis(GAMEPAD_KEYMAP.LEFT_STICK_X), self.GetAxis(GAMEPAD_KEYMAP.LEFT_STICK_Y))
         else:
-            return Vector2(self.GetAxis(GAMEPAD_KEY.LEFT_STICK_X), self.GetAxis(GAMEPAD_KEY.LEFT_STICK_Y))
+            return Vector2(self.GetAxis(GAMEPAD_KEYMAP.LEFT_STICK_X), self.GetAxis(GAMEPAD_KEYMAP.LEFT_STICK_Y))

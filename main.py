@@ -2,7 +2,8 @@
 from inputController import GetDeviceList, DetectDeviceType
 from midicontroller import MidiController
 from utility import cls
-from constants import DEVICE_TYPE, GAMEPAD_KEY, MOUSE_KEY
+from constants import DEVICE_TYPE, GAMEPAD_KEYMAP, MOUSE_KEYMAP
+import KeyActionDirectory as kad
 
 import PySimpleGUI as sg
 
@@ -19,13 +20,13 @@ note = sg.InputText(' ', key='')
 
 #Game Pad inputs
 gamepadLayout = [[sg.Text('Assign Game Keys To Notes')]]
-for gkey in GAMEPAD_KEY:
+for gkey in GAMEPAD_KEYMAP:
     gamepadLayout.append([sg.Text(gkey), sg.InputText(' ', key=f"-{gkey}-")])
 gamepadFrame = sg.Frame('Game Pad', layout=gamepadLayout, key=('-GAMEPADFRAME-'), visible=False)
 
 #Mouse inputs
 mouseLayout = [[sg.Text('Assign Mouse Keys To Notes')]]
-for mkey in MOUSE_KEY:
+for mkey in MOUSE_KEYMAP:
     mouseLayout.append([sg.Text(mkey), sg.Button('Mouse')])
 mouseFrame = sg.Frame('Mouse Frame', layout=mouseLayout, key=('-MOUSEFRAME-'), visible=False)
 
@@ -66,7 +67,7 @@ while True:
             window['-MOUSEFRAME-'].update(visible=True)
     if event == 'Refresh Devices':
         window['-DEVICECOMBO-'].Update(values=GetDeviceList(), value=GetDeviceList()[0])
-    for gkey in GAMEPAD_KEY:
+    for gkey in GAMEPAD_KEYMAP:
         if event == f"-{gkey}-":
             print(gkey)
 
