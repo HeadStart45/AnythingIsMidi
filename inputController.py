@@ -1,9 +1,22 @@
 from inputs import get_gamepad, devices
-from constants import GAMEPAD_KEY, KEY_STATE, EVENT_TYPE
+from constants import GAMEPAD_KEY, KEY_STATE, EVENT_TYPE, DEVICE_TYPE
 from utility import Vector2
 
 def GetDeviceList():
     return devices.all_devices
+
+def DetectDeviceType(device):
+    if(device in devices.gamepads):
+        return DEVICE_TYPE.GAMEPAD
+    elif(device in devices.mice):
+        return DEVICE_TYPE.MOUSE
+    elif(device in devices.keyboards):
+        return DEVICE_TYPE.KEYBOARD
+    elif(device in devices.other_devices):
+        return DEVICE_TYPE.OTHER
+    else:
+        return DEVICE_TYPE.NONE
+
 
 #Monitors the input state of the gamepad. Poll events will wait until input is detected 
 #so should be threaded if not wanting to block execution

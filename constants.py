@@ -22,6 +22,12 @@ class GAMEPAD_ABSOLUTE(str, Enum):
     
     RIGHT_TRIGGER = "ABS_RZ"
 
+class MOUSE_KEY(str, Enum):
+    LEFT_BUTTON = "BTN_LEFT"
+    RIGHT_BUTTON = "BTN_RIGHT"
+    MIDDLE_BUTTON = "BTN_MIDDLE"
+    SIDE_BUTTON = "BTN_SIDE"
+
 class KEY_STATE(Enum):
     STATE_UP = 0
     STATE_DOWN = 1
@@ -38,10 +44,11 @@ class MIDI_PAD(Enum):
     PAD_THREE = 37
     PAD_FOUR = 36
 
-class INPUT_CONTROLLER_TYPE(Enum):
-    GAMEPAD = 0,
-    KEYBOARD = 1,
-    MOUSE = 2,
-    OTHER = 3,
+class DEVICE_TYPE(Enum):
+    NONE = 0
+    GAMEPAD = 1,
+    KEYBOARD = 2,
+    MOUSE = 3,
+    OTHER = 4,
 
 
