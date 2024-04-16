@@ -39,13 +39,14 @@ This current version is a single implementation for a controller. On pressing th
 Made as a portfolio piece by Liam McDonald-Lurch
 [LinkedIn]https://www.linkedin.com/in/liam-mcdonald-lurch-1a965b131/
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
 ## Version History
 
 * 0.1
     * Initial Prototype Release
+* 0.2.0
+    * Implemented PySimpleGui and added simple midi number note to key mapping
+* 0.3.0
+    * Alpha Release with updated gui and action selection
 
 ## License
 
