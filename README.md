@@ -37,7 +37,7 @@ This current version is a single implementation for a controller. On pressing th
 ## Authors
 
 Made as a portfolio piece by Liam McDonald-Lurch
-[LinkedIn]https://www.linkedin.com/in/liam-mcdonald-lurch-1a965b131/
+[LinkedIn](https://www.linkedin.com/in/liam-mcdonald-lurch-1a965b131/)
 
 ## Version History
 
