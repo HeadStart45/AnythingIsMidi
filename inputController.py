@@ -51,8 +51,6 @@ class gamepadstate:
     def GetButtonDown(self, name: str) -> bool:
         #print(f"Actual Button State: {self.buttonStates[name]}")
         if(name in self.buttonStates):
-            if(self.buttonStates[name] == KEY_STATE.STATE_DOWN) :
-                print("this should evaluate to true")
             return self.buttonStates[name] == KEY_STATE.STATE_DOWN
         else:
             return False

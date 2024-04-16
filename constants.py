@@ -59,3 +59,20 @@ DEVICE_TO_KEYMAP = {
 DEVICE_TO_ABSOLUTEMAP = {
     DEVICE_TYPE.GAMEPAD : GAMEPAD_ABSOLUTEMAP,
 }
+
+NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+OCTAVES = list(range(11))
+NOTES_IN_OCTAVE = len(NOTES)
+#OCTAVE_MODE = ['EXPLICIT', 'PROGRAMMED']
+
+class OCTAVE_MODE(Enum):
+    EXPLICIT = 0,
+    PROGRAMMED = 1,
+OCTAVE_MODE_LIST = [y.name for y in OCTAVE_MODE]
+
+class ACTION_TYPE(Enum):
+    PLAY_NOTE = 0,
+    SHIFT_OCTAVE = 1,
+    SHIFT_DOWN_FOUR = 2,
+ACTION_TYPE_LIST = [x.name for x in ACTION_TYPE]
+

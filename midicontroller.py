@@ -1,7 +1,8 @@
 import rtmidi
 from inputController import gamepadstate
-from constants import DEVICE_TO_KEYMAP, DEVICE_TYPE
+from constants import DEVICE_TO_KEYMAP, DEVICE_TYPE, OCTAVE_MODE, ACTION_TYPE
 import KeyActionDirectory as kad
+import utility
 
 
 
@@ -15,6 +16,7 @@ class MidiController:
         self.states = gamepadstate()
         self.SUPPORTED_DEVICES = [DEVICE_TYPE.GAMEPAD]
         self.loop = False
+        self.programOctave = 3
     def Setup(self) -> None:
         if self.available_ports:
             self.midiout.open_port(self.port)
@@ -49,18 +51,28 @@ class MidiController:
         self.midiout.send_message(self.generateMidiMessage(True, note))
     def StopPlayNote(self, note: int) -> None:
         self.midiout.send_message(self.generateMidiMessage(False, note))
+
+    def HasPort(self) -> bool:
+        return self.port != -1 # -1 is the default should only be sit to this if there are no ports available
+    def AddPlayNoteAction(self,key, note, octave, octave_mode):
+        if(octave_mode == OCTAVE_MODE.EXPLICIT.name):
+            noteAsNumber: int = utility.note_to_number(note, octave=int(octave))
+            self.key_action_directory.AddPlayNoteAction(key, noteAsNumber)
+        else:
+            noteAsNumber: int = utility.note_to_number(note, octave=self.programOctave)
+            self.key_action_directory.AddPlayNoteAction(key, noteAsNumber)
+    #MAIN Input loop
     def ControllerLoop(self) -> None:   
         self.Setup()
         while(self.midiout.is_port_open()):
             #poll the gamepad for input
             self.states.PollEvents()
-            print("loop")
+            #print("loop")
             for key in DEVICE_TO_KEYMAP[self.activeInputType]:
-                if(self.states.GetButtonDown(key)):
-                    self.StartPlayNote(self.key_action_directory.GetAction(key))
-                    print("Playing Note")
-                if(self.states.GetButtonUp(key)):
-                    self.StopPlayNote(self.key_action_directory.GetAction(key))
-                    print("Stop Playing Note")
-    def HasPort(self) -> bool:
-        return self.port != -1 # -1 is the default should only be sit to this if there are no ports available
+                if(self.key_action_directory.GetAction(key).action_type == ACTION_TYPE.PLAY_NOTE):
+                    if(self.states.GetButtonDown(key)):
+                        self.StartPlayNote(self.key_action_directory.GetAction(key).note)
+                        #print("Playing Note")
+                    if(self.states.GetButtonUp(key)):
+                        self.StopPlayNote(self.key_action_directory.GetAction(key).note)
+                        #print("Stop Playing Note")
